@@ -1,0 +1,69 @@
+### NecessÆriopara pegarotoken
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "girl",
+    "password": "asd"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+### teste de inserção de emprestimo
+POST http://localhost:40000/insertEmprestimo HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "emprestimoId": "1.1",
+    "nomePessoa": "Carlos Alberto",
+    "endereco": "Rua das Ameixas, 512",
+    "livroId": 5,
+    "data_emprestimo": "1999-12-12",
+    "data_devolucao": "2000-12-12",
+    "deleted": false
+}
+
+### teste de buscar todos os emprestimos
+GET http://localhost:40000/getAllEmprestimos HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+
+}
+
+### teste de buscar emprestimo por ID
+GET http://localhost:40000/getEmprestimoByID/2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### teste de atualizar o emprestimo
+PUT http://localhost:40000/updateEmprestimo/1.1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "emprestimoId": "1.1",
+    "nomePessoa": "José das Neves",
+    "endereco": "Rua das couves",
+    "livroId": 5,
+    "data_emprestimo": "1999-12-12",
+    "data_devolucao": "2000-12-12",
+    "deleted": false
+
+}
+### teste de atualização de emprestimo
+DELETE http://localhost:40000/deleteEmprestimo/1.1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+###teste de buscar livros para emprestimos
+GET http://localhost:40000/getLivrosForEmprestimos HTTP/1.1
+content-type: application/json
+Authorization: Bearer{{accessToken}}
