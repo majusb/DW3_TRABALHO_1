@@ -28,6 +28,8 @@
     //@ Rotas de Emprestimos
 
     // Rota Login
+    routerApp.post("/Login", appLogin.Login);
+    routerApp.post("/Logout", appLogin.Logout);
 
 
     module.exports = routerApp;
