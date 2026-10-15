@@ -1,0 +1,62 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "UserName": "girl",
+    "Password": "girl"
+}
+### Seta o token (o REST Client lê o "token" da resposta do teste acima)
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+
+
+### teste de inserção de livro
+POST http://localhost:40000/insertLivro HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "livroid": 0,
+    "nomeLivro": "Memórias Póstumas de Brás Cubas",
+    "autor": "Machado de Assis",
+    "genero": "Romance",
+    "valor": 44.90,
+    "status": true,
+    "deleted": false
+}
+
+### teste de buscar todos os livros
+GET http://localhost:40000/getAllLivros HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de buscar livro por ID
+GET http://localhost:40000/getLivroByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de buscar livro por ID SEM token (deve responder "Não foi informado o token JWT")
+GET http://localhost:40000/getLivroByID/1 HTTP/1.1
+content-type: application/json
+
+### teste de atualização de livro
+PUT http://localhost:40000/updateLivro/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nomeLivro": "O Senhor dos Anéis",
+    "autor": "J.R.R. Tolkien",
+    "genero": "Fantasia",
+    "valor": 99.90,
+    "status": true,
+    "deleted": false
+}
+
+### teste de exclusão (lógica) de livro
+DELETE http://localhost:40000/deleteLivro/5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
