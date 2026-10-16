@@ -7,7 +7,7 @@
     var loginRouter = require('./routes/rtLogin');
     var homeRouter = require('./routes/rtHome');
     var emprestimosRouter = require('./routes/rtEmprestimo');
-    var cursosRouter = require('./routes/rtCursos');
+    var livroRouter = require('./routes/rtLivro');
 
     require('dotenv').config({ path: path.join(__dirname, 'dw3frontend.env'), quiet: true });
 
@@ -33,8 +33,8 @@
     app.use('/', indexRouter);
     app.use('/login', loginRouter);
     app.use('/home', homeRouter);
-    app.use('/alunos', alunosRouter);
-    app.use('/cursos', cursosRouter);
+    app.use('/livro', livroRouter);
+    app.use('/emprestimo', emprestimosRouter);
 
 
 
