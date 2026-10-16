@@ -1,0 +1,84 @@
+    var createError = require('http-errors');
+    var express = require('express');
+    var path = require('path');
+    var nunjucks = require('nunjucks');
+
+    var indexRouter = require('./routes/rtIndex');
+    var loginRouter = require('./routes/rtLogin');
+    var homeRouter = require('./routes/rtHome');
+    var emprestimosRouter = require('./routes/rtEmprestimo');
+    var cursosRouter = require('./routes/rtCursos');
+
+    require('dotenv').config({ path: path.join(__dirname, 'dw3frontend.env'), quiet: true });
+
+    var app = express();
+    var viewsPath = path.join(__dirname, 'views');
+    var appsPath = path.join(__dirname, 'apps');
+    const port = process.env.PORT || 40100;
+
+    app.set('views', [viewsPath, appsPath]);
+    app.set('view engine', 'njk');
+
+    nunjucks.configure([viewsPath, appsPath], {
+    autoescape: true,
+    express: app,
+    noCache: app.get('env') === 'development'
+    });
+
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use('/apps', express.static(path.join(__dirname, 'apps')));
+
+    app.use('/', indexRouter);
+    app.use('/login', loginRouter);
+    app.use('/home', homeRouter);
+    app.use('/alunos', alunosRouter);
+    app.use('/cursos', cursosRouter);
+
+
+
+    /**
+     *app.use(function(req, res, next) {
+    next(createError(404));
+    });
+    * app.use(function(err, req, res, next) {
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    res.status(err.status || 500);
+    res.render('error', { title: 'Erro' });
+    });
+    */
+
+
+    // Substitua o bloco da linha 39 por este:
+    app.use(function(req, res, next) {
+    console.log("URL QUE FALHOU AO ATUALIZAR:", req.method, req.originalUrl);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+    });
+    // Tratamento de 404 sem renderizar error.njk
+    // Middleware de 404 atualizado
+    app.use(function(req, res, next) {
+    console.log("=========================================");
+    console.log("ARQUIVO OU ROTA QUE DEU 404:", req.originalUrl);
+    console.log("=========================================");
+    next(createError(404));
+    });
+
+    // Tratador de erro global (evita a procura por error.njk)
+    app.use(function(err, req, res, next) {
+    console.error("=== ERRO REGISTRADO NO SERVIDOR ===");
+    console.error(err);
+
+    res.status(err.status || 500).json({
+        message: err.message,
+        status: err.status || 500
+    });
+    });
+
+    app.listen(port, () => {
+    console.log(`App listening at port ${port}`)
+    })
