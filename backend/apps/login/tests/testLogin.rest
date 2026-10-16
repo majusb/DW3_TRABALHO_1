@@ -1,0 +1,34 @@
+### teste de login (usuários criados pelo banco.sql: girl/girl e asd/asd)
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "UserName": "girl",
+    "Password": "girl"
+}
+
+### teste de login com senha errada (deve responder 403 "Login inválido!")
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "UserName": "girl",
+    "Password": "errada"
+}
+
+### teste de login com usuário inexistente (deve responder 403 "Usuário não identificado!")
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "UserName": "naoexiste",
+    "Password": "girl"
+}
+
+### teste de logout
+POST http://localhost:40000/Logout HTTP/1.1
+content-type: application/json
+
+{
+
+}

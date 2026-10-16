@@ -1,49 +1,53 @@
-CREATE TABLE livro(
-	livroId NUMERIC(5,0),
-	nomeLivro VARCHAR (150),
-	autor VARCHAR(150),
-	genero VARCHAR(150),
-	status BOOLEAN,
-	deleted boolean DEFAULT false
-	CONSTRAINT livroId_pk PRIMARY KEY (livroId)
+----- Cria um banco de dados
+-- create database dw3_trabalho;
+
+create table IF NOT EXISTS livros (
+    livroId bigserial constraint pk_livros PRIMARY KEY,
+    nomeLivro varchar(150),
+    autor varchar(150),
+    genero varchar(150),
+    valor numeric(8,2),
+    status boolean,
+    deleted boolean DEFAULT false
 );
 
-INSERT INTO livro (livroId, nomeLivro, autor, genero, status) VALUES
-(1, 'O Senhor dos Anéis', 'J.R.R. Tolkien', 'Fantasia', true),
-(2, '1984', 'George Orwell', 'Distopia', true),
-(3, 'O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Infantil', true),
-(4, 'Dom Casmurro', 'Machado de Assis', 'Romance', true),
-(5, 'A Revolução dos Bichos', 'George Orwell', 'Satira', true);
+insert into livros values
+    (default, 'O Senhor dos Anéis', 'J.R.R. Tolkien', 'Fantasia', 89.90, true),
+    (default, '1984', 'George Orwell', 'Distopia', 54.90, true),
+    (default, 'O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Infantil', 34.90, true),
+    (default, 'Dom Casmurro', 'Machado de Assis', 'Romance', 42.50, true),
+    (default, 'A Revolução dos Bichos', 'George Orwell', 'Satira', 39.90, true)
+    ON CONFLICT DO NOTHING;
 
-CREATE TABLE emprestimo(
-	emprestimoId NUMERIC(5,0),
-	nomePessoa VARCHAR(150),
-	endereco VARCHAR(150),
-	livroId NUMERIC(5,0),
-	data_emprestimo DATE,
-	data_devolucao DATE,
-	deleted boolean DEFAULT false,
-	CONSTRAINT emprestimoId_pk PRIMARY KEY (emprestimoId),
-	CONSTRAINT livroId_fk FOREIGN KEY (livroId) REFERENCES livro
+create table IF NOT EXISTS emprestimos (
+    emprestimoId bigserial constraint pk_emprestimos PRIMARY KEY,
+    nomePessoa varchar(150),
+    endereco varchar(150),
+    livroId bigint constraint fk_emprestimo_livro REFERENCES livros,
+    data_emprestimo date,
+    data_devolucao date,
+    deleted boolean DEFAULT false
 );
 
-INSERT INTO emprestimo (emprestimoId, nomePessoa, endereco, livroId, data_emprestimo, data_devolucao) VALUES
-(1, 'João Silva', 'Rua A, 123',(select livroId from livro where nomeLivro = 'O Senhor dos Anéis'), '2026-01-10', '2026-01-20'),
-(2, 'Maria Oliveira', 'Rua B, 456', (select livroId from livro where nomeLivro = '1984'), '2026-02-15', '2026-02-25');
+insert into emprestimos values
+    (default, 'João Silva', 'Rua A, 123',
+        (select livroId from LIVROS where nomeLivro = 'O Senhor dos Anéis'),
+        '2026-01-10', '2026-01-20'),
+    (default, 'Maria Oliveira', 'Rua B, 456',
+        (select livroId from LIVROS where nomeLivro = '1984'),
+        '2026-02-15', '2026-02-25')
+    ON CONFLICT DO NOTHING;
 
-
-CREATE TABLE usuario(
-	usuarioId NUMERIC(5,0),
-	nomeUsuario VARCHAR(150),
-	password text,
-	deleted BOOLEAN DEFAULT false,
-	CONSTRAINT usuarioId_pk PRIMARY KEY (usuarioId)
+create table IF NOT EXISTS usuarios (
+    usuarioId bigserial constraint pk_usuarios PRIMARY KEY,
+    username varchar(10) UNIQUE,
+    password text,
+    deleted boolean DEFAULT false
 );
 
 CREATE EXTENSION if NOT EXISTS pgcrypto;
 
 insert into usuarios values
-	(default, 'girl',crypt('girl',gen_salt('bf'))),
-	(default, 'asd', crypt('asd',gen_salt('bf'))),
-
-ON CONFLICTDONOTHING
+    (default, 'girl', crypt('girl', gen_salt('bf'))), -- senha criptografada com bcrypt
+    (default, 'asd', crypt('asd', gen_salt('bf'))) -- senha criptografada com bcrypt
+    ON CONFLICT DO NOTHING;
