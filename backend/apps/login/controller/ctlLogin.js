@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");   // gera e verifica tokens JWT
 const bCrypt = require("bcryptjs");    // compara a senha digitada com o hash salvo no banco
 const mdlLogin = require("../model/mdlLogin");
 
-//-- POST /Login  -> corpo: { "UserName": "girl", "Password": "girl" }
+//-- POST /Login  -> corpo: { "username": "girl", "password": "girl" }
 const Login = async (req, res, next) => {
   // 1) procura o usuário no banco
-  const credencial = await mdlLogin.GetCredencial(req.body.UserName);
+  const credencial = await mdlLogin.GetCredencial(req.body.username);
 
   if (credencial.length == 0) {
     return res.status(403).json({ message: "Usuário não identificado!" });
@@ -16,7 +16,7 @@ const Login = async (req, res, next) => {
 
   // 2) compara a senha digitada com o hash bcrypt gravado pelo banco.sql
   //    (crypt('girl', gen_salt('bf')) no Postgres gera um hash compatível com bcryptjs)
-  if (bCrypt.compareSync(req.body.Password, credencial[0].password)) {
+  if (bCrypt.compareSync(req.body.password, credencial[0].password)) {
     //auth ok
     // 3) gera o token JWT: payload { username }, assinado com SECRET_API
     const username = credencial[0].username;

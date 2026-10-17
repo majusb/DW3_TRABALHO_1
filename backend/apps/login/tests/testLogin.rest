@@ -3,8 +3,8 @@ POST http://localhost:40000/Login HTTP/1.1
 content-type: application/json
 
 {
-    "UserName": "girl",
-    "Password": "girl"
+    "username": "girl",
+    "password": "girl"
 }
 
 ### teste de login com senha errada (deve responder 403 "Login inválido!")
@@ -12,8 +12,8 @@ POST http://localhost:40000/Login HTTP/1.1
 content-type: application/json
 
 {
-    "UserName": "girl",
-    "Password": "errada"
+    "username": "girl",
+    "password": "errada"
 }
 
 ### teste de login com usuário inexistente (deve responder 403 "Usuário não identificado!")
@@ -21,8 +21,8 @@ POST http://localhost:40000/Login HTTP/1.1
 content-type: application/json
 
 {
-    "UserName": "naoexiste",
-    "Password": "girl"
+    "username": "naoexiste",
+    "password": "girl"
 }
 
 ### teste de logout

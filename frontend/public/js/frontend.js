@@ -21,6 +21,9 @@
     if (isLogged) {
         document.cookie = 'IsLogged=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     }
+
+    // Tira tambem o token do localStorage, senao ele continua guardado depois de sair
+    localStorage.removeItem('token');
     }
 
     function montarHeadersAutenticacao(headers) {
