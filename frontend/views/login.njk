@@ -1,28 +1,41 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-  <section class="login-screen d-flex align-items-center justify-content-center">
-    <div class="login-card card shadow-lg border-0">
-      <div class="card-body p-4 p-md-5">
-        <p class="page-kicker text-primary fw-semibold mb-2">Biblioteca</p>
-        <h1 class="h3 fw-bold mb-2">Acesso ao sistema</h1>
-        <p class="text-secondary mb-4">Entre para visualizar o painel e o menu principal.</p>
+  <div class="row justify-content-center align-items-center min-vh-75">
+    <div class="col-md-5">
+      <div class="card login-card border-0 shadow-lg">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center mb-4">
+            <p class="text-primary fw-semibold mb-1">BIBLIOTECA</p>
+            <h1 class="h3 fw-bold mb-2">Acesso ao sistema</h1>
+            <p class="text-secondary mb-0">Entre para visualizar o painel e o menu principal.</p>
+          </div>
 
-        <form id="loginForm" data-servidor-trabalho="{{ servidorTrabalho }}">
-          <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
-          <div class="mb-3">
-            <label class="form-label" for="usuario">Usuário</label>
-            <input class="form-control" id="usuario" name="usuario" type="text" placeholder="Seu usuário" autocomplete="username">
-          </div>
-          <div class="mb-4">
-            <label class="form-label" for="senha">Senha</label>
-            <input class="form-control" id="senha" name="senha" type="password" placeholder="Sua senha" autocomplete="current-password">
-          </div>
-          <button class="btn btn-primary w-100" type="submit">Entrar</button>
-        </form>
+          <!-- O atributo data-servidor-dw3 injeta a variável correta para o JavaScript ler -->
+          <form id="loginForm" data-servidor-trabalho="{{ servidorTrabalho }}">
+            <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
+
+            <div class="mb-3">
+              <label for="usuario" class="form-label">Usuário</label>
+              <input type="text" class="form-control" id="usuario" name="usuario" value="" required autofocus>
+            </div>
+
+            <div class="mb-4">
+              <label for="senha" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="senha" name="senha" value="" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Scripts padrão de frontend -->
   <script src="/js/frontend.js"></script>
+  <script src="https://code.jquery.com/jquery-4.0.0.slim.min.js"></script>
   <script src="/apps/login/vwLogin.js"></script>
 {% endblock %}
