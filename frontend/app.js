@@ -38,46 +38,23 @@
 
 
 
-    /**
-     *app.use(function(req, res, next) {
-    next(createError(404));
-    });
-    * app.use(function(err, req, res, next) {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    res.status(err.status || 500);
-    res.render('error', { title: 'Erro' });
-    });
-    */
-
-
-    // Substitua o bloco da linha 39 por este:
     app.use(function(req, res, next) {
-    console.log("URL QUE FALHOU AO ATUALIZAR:", req.method, req.originalUrl);
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-    });
-    // Tratamento de 404 sem renderizar error.njk
-    // Middleware de 404 atualizado
-    app.use(function(req, res, next) {
-    console.log("=========================================");
-    console.log("ARQUIVO OU ROTA QUE DEU 404:", req.originalUrl);
-    console.log("=========================================");
-    next(createError(404));
+        next(createError(404));
     });
 
-    // Tratador de erro global (evita a procura por error.njk)
     app.use(function(err, req, res, next) {
-    console.error("=== ERRO REGISTRADO NO SERVIDOR ===");
-    console.error(err);
+        res.locals.message = err.message;
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+        res.status(err.status || 500);
+        res.render('error', { title: 'Erro' });
+    });
+    
 
     res.status(err.status || 500).json({
         message: err.message,
         status: err.status || 500
     });
-    });
+    
 
     app.listen(port, () => {
     console.log(`App listening at port ${port}`)
