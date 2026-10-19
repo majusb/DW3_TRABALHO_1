@@ -2,6 +2,11 @@
     const express = require("express");
     const routerApp = express.Router();
 
+
+const appLivros = require("../apps/livros/controller/ctlLivros");
+const appEmprestimos = require("../apps/emprestimos/controller/ctlEmprestimo");
+const appLogin = require("../apps/login/controller/ctlLogin"); // Ajuste o caminho se necessário
+
     routerApp.use((req, res, next) => {
     next();
     });
@@ -22,7 +27,8 @@
     routerApp.delete("/deleteLivro/:livroid", appLogin.AutenticaJWT, appLivros.DeleteLivro);
 
     //@ Rotas de Emprestimos
-    routerApp.get("/getAllEmprestimos", appEmprestimos.GetAllEmprestimos);
+    routerApp.get("/getAllEmprestimo", appEmprestimos.GetAllEmprestimo);
+    routerApp.get("/getLivroForEmprestimo", appLogin.AutenticaJWT, appEmprestimos.GetLivroForEmprestimo);
     routerApp.get("/getEmprestimoByID/:emprestimoid", appLogin.AutenticaJWT,appEmprestimos.GetEmprestimoByID);
     routerApp.post("/insertEmprestimo", appLogin.AutenticaJWT,appEmprestimos.InsertEmprestimo);
     routerApp.put("/updateEmprestimo/:emprestimoid", appLogin.AutenticaJWT,appEmprestimos.UpdateEmprestimo);

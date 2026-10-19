@@ -1,24 +1,23 @@
-### NecessÆriopara pegarotoken
-### Post
+### 1. Pega o token de acesso
 # @name loginAutenticado
 POST http://localhost:40000/Login HTTP/1.1
 content-type: application/json
 
 {
     "username": "girl",
-    "password": "asd"
+    "password": "girl"
 }
 
-### Seta o token
-@accessToken = {{loginAutenticado.response.body.$.token}}
+### Seta o token (ajustado para capturar corretamente do body)
+@accessToken = {{loginAutenticado.response.body.token}}
 
-### teste de inserção de emprestimo
+
+### 2. Teste de inserção de empréstimo (ID corrigido para inteiro)
 POST http://localhost:40000/insertEmprestimo HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "emprestimoId": "1.1",
     "nomePessoa": "Carlos Alberto",
     "endereco": "Rua das Ameixas, 512",
     "livroId": 5,
@@ -27,43 +26,42 @@ Authorization: Bearer {{accessToken}}
     "deleted": false
 }
 
-### teste de buscar todos os emprestimos
-GET http://localhost:40000/getAllEmprestimos HTTP/1.1
+
+### 3. Teste de buscar todos os empréstimos (Corrigido com 's' no final)
+GET http://localhost:40000/getAllEmprestimo HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### 4. Teste de buscar empréstimo por ID
+GET http://localhost:40000/getEmprestimoByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### 5. Teste de atualizar o empréstimo (ID inteiro na URL e no corpo)
+PUT http://localhost:40000/updateEmprestimo/1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-
-}
-
-### teste de buscar emprestimo por ID
-GET http://localhost:40000/getEmprestimoByID/2 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{accessToken}}
-
-
-### teste de atualizar o emprestimo
-PUT http://localhost:40000/updateEmprestimo/1.1 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{accessToken}}
-
-{
-    "emprestimoId": "1.1",
+    "emprestimoId": 1,
     "nomePessoa": "José das Neves",
     "endereco": "Rua das couves",
     "livroId": 5,
     "data_emprestimo": "1999-12-12",
     "data_devolucao": "2000-12-12",
     "deleted": false
-
 }
-### teste de atualização de emprestimo
-DELETE http://localhost:40000/deleteEmprestimo/1.1 HTTP/1.1
+
+
+### 6. Teste de remoção de empréstimo
+DELETE http://localhost:40000/deleteEmprestimo/1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 
-###teste de buscar livros para emprestimos
-GET http://localhost:40000/getLivrosForEmprestimos HTTP/1.1
+### 7. Teste de buscar livros para empréstimos (Corrigido para 'To')
+GET http://localhost:40000/getLivroForEmprestimo HTTP/1.1
 content-type: application/json
-Authorization: Bearer{{accessToken}}
+Authorization: Bearer {{accessToken}}

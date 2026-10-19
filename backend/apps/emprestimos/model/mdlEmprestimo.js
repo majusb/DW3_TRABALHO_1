@@ -25,7 +25,7 @@ let msg = "ok";
 try{
     linhasAfetadas =(
         await db.query(
-            "INSERT INTO emprestimos " + "values(default, $1, $2, $3, $4, $5)",
+            "INSERT INTO emprestimos " + "values(default, $1, $2, $3, $4, $5, $6)",
             [
                 emprestimoREGPar.nomePessoa,
                 emprestimoREGPar.endereco,

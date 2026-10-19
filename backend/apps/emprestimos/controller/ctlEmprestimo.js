@@ -2,7 +2,7 @@ const mdlEmprestimos= require("../model/mdlEmprestimo");
 
 const GetAllEmprestimo = (req, res) =>
     (async () => {
-        let registro = await mdlEmprestimos.GetAllEmprestimos();
+        let registro = await mdlEmprestimos.GetAllEmprestimo();
         
         for (let i = 0; i < registro.length; i++){
             const row = registro[i];
