@@ -3,6 +3,7 @@
 {% block content %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+  <!-- Tela de CADASTRO de livros. Serve os 4 modos: Cr, Re, Up e De -->
   <header class="page-header">
     <p class="page-kicker text-primary fw-semibold mb-2">Cadastro</p>
     <h1 class="h3 fw-bold mb-2">Formulario de livros</h1>
@@ -18,6 +19,7 @@
         </div>
       </div>
 
+      <!-- O livroid e o deleted vao escondidos, o usuario nao mexe neles -->
       <form id="frmLivros" data-servidor-trabalho="{{ servidorTrabalho }}">
         <input type="hidden" id="livroid" name="livroid" value="0">
         <input type="hidden" id="deleted" name="deleted" value="false">
@@ -52,6 +54,7 @@
           </div>
         </div>
 
+        <!-- Os 3 primeiros botoes nascem com d-none: o script mostra so o do modo -->
         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
           <button type="button" class="btn btn-primary d-none" id="btnInserirLivro">
             <i class="bi bi-plus-lg me-1"></i>Inserir

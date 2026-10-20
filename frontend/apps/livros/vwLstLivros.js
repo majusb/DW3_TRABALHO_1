@@ -1,5 +1,6 @@
 // Arquivo: apps/livros/vwLstLivros.js
 
+//-- Roda quando a tela abre: confere o login e manda buscar os livros
 document.addEventListener('DOMContentLoaded', function() {
   if (!IsLogged()) {
     return;
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   carregarLivros(servidorTrabalho, alertBox);
 });
 
+//-- API getAllLivros: busca a lista no backend e joga na tabela
 async function carregarLivros(servidorTrabalho, alertBox) {
   try {
     if (!servidorTrabalho) {
@@ -49,6 +51,7 @@ async function carregarLivros(servidorTrabalho, alertBox) {
   }
 }
 
+//-- Monta o DataTables: as 7 colunas e os 3 botoes de cada linha
 function inicializarTabelaLivros(livros) {
   new DataTable('#tblLivros', {
     data: livros,
@@ -119,6 +122,7 @@ function inicializarTabelaLivros(livros) {
   });
 }
 
+//-- Clique nos botoes da linha: abre o formulario no modo Re, Up ou De
 function configurarOperacoesLivros(alertBox) {
   var tabela = document.getElementById('tblLivros');
 
@@ -152,6 +156,7 @@ function configurarOperacoesLivros(alertBox) {
   });
 }
 
+//-- Impede que texto vindo do banco seja lido como HTML na tabela
 function escaparHtmlLivro(valor) {
   return String(valor)
     .replace(/&/g, '&amp;')
@@ -161,6 +166,7 @@ function escaparHtmlLivro(valor) {
     .replace(/>/g, '&gt;');
 }
 
+//-- Mostra a tarja vermelha de erro no topo da lista
 function exibirErroLivro(alertBox, mensagem) {
   if (!alertBox) {
     return;

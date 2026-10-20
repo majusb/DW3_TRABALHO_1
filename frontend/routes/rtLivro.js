@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 
+//-- /livro -> a tela da tabela
 router.get('/', function(req, res) {
   res.render('livros/vwLstLivros', {
     title: 'Livros',
@@ -11,6 +12,7 @@ router.get('/', function(req, res) {
   });
 });
 
+//-- /livro/form -> a tela de cadastro
 router.get('/form', function(req, res) {
   res.render('livros/vwFormLivros', {
     title: 'Formulario de livros',
