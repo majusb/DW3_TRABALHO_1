@@ -2,6 +2,8 @@
 
 {% block content %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css">
 
   <header class="page-header">
     <p class="page-kicker text-primary fw-semibold mb-2">Cadastro</p>
@@ -18,7 +20,7 @@
         </div>
       </div>
 
-      <form id="frmLivros" data-servidor-trabalho="{{ servidorTrabalho }}">
+      <form id="frmEmprestimos" data-servidor-dw3="{{ servidorDw3 }}">
         <input type="hidden" id="emprestimoId" name="emprestimoId" value="0">
         <input type="hidden" id="deleted" name="deleted" value="false">
 
@@ -47,7 +49,7 @@
           <div class="col-12 col-md-3">
             <label for="livroId" class="form-label">Livro</label>
             <select class="form-select" id="livroId" name="livroId" required>
-              <option value="">Selecione um livro</option
+              <option value="">Selecione um livro</option>
             </select>
           </div>
         </div>
@@ -72,5 +74,6 @@
 
   <script src="/js/frontend.js"></script>
   <script src="https://code.jquery.com/jquery-4.0.0.slim.min.js"></script>
-  <script src="/apps/livros/vwFormEmprestimo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="/apps/emprestimo/vwFormEmprestimo.js"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    if (!dw3IsLogged()) {
+    if (!IsLogged()) {
         return;
     }
 
@@ -70,8 +70,8 @@ async function carregarLivrosToEmprestimos(servidorDw3) {
             throw new Error('Endereço do servidor backend não configurado.');
         }
 
-        var response = await fetch(servidorDw3 + '/getLivroToEmprestimo', {
-            headers: dw3MontarHeadersAutenticacao()
+        var response = await fetch(servidorDw3 + '/getLivroForEmprestimo', {
+            headers: montarHeadersAutenticacao()
         });
 
         if (!response.ok) {
@@ -108,7 +108,7 @@ function preencherSelectLivros(livros) {
     livros.forEach(function(livro) {
         var option = document.createElement('option');
         option.value = livro.livroid; // Ajuste conforme o campo vindo do banco se necessário (livro.livroid ou livro.id)
-        option.textContent = livro.titulo;
+        option.textContent = livro.nomelivro;
         livroSelect.appendChild(option);
     });
 
@@ -137,7 +137,7 @@ async function vwInsertEmprestimo() {
 
         var response = await fetch(servidorDw3 + '/insertEmprestimo', {
             method: 'POST',
-            headers: dw3MontarHeadersAutenticacao({
+            headers: montarHeadersAutenticacao({
                 'content-type': 'application/json'
             }),
             body: JSON.stringify(montarEmprestimoDoFormulario())
@@ -157,7 +157,7 @@ async function vwInsertEmprestimo() {
             throw new Error(data.status || 'Não foi possível inserir o empréstimo.');
         }
 
-        window.location.href = '/emprestimos';
+        window.location.href = '/emprestimo';
     } catch (error) {
         alert(error.message || 'Erro ao inserir empréstimo.');
     } finally {
@@ -185,7 +185,7 @@ async function vwGetEmprestimoByID() {
         }
 
         var response = await fetch(servidorDw3 + '/getEmprestimoByID/' + encodeURIComponent(emprestimoId), {
-            headers: dw3MontarHeadersAutenticacao({
+            headers: montarHeadersAutenticacao({
                 'content-type': 'application/json'
             })
         });
@@ -212,7 +212,7 @@ async function vwGetEmprestimoByID() {
 
         // Preenche os campos corretamente com base no HTML de Empréstimos
         document.getElementById('emprestimoId').value = emprestimo.emprestimoid;
-        document.getElementById('nomePessoa').value = emprestimo.nomePessoa || '';
+        document.getElementById('nomePessoa').value = emprestimo.nomepessoa || '';
         document.getElementById('endereco').value = emprestimo.endereco || '';
         document.getElementById('data_emprestimo').value = emprestimo.data_emprestimo ? emprestimo.data_emprestimo.slice(0, 10) : '';
         document.getElementById('data_devolucao').value = emprestimo.data_devolucao ? emprestimo.data_devolucao.slice(0, 10) : '';
@@ -258,7 +258,7 @@ async function vwUpdateEmprestimo() {
 
         var response = await fetch(servidorDw3 + '/updateEmprestimo/' + encodeURIComponent(emprestimoId), {
             method: 'PUT',
-            headers: dw3MontarHeadersAutenticacao({
+            headers: montarHeadersAutenticacao({
                 'content-type': 'application/json'
             }),
             body: JSON.stringify(emprestimo)
@@ -279,7 +279,7 @@ async function vwUpdateEmprestimo() {
         }
 
         alert('Empréstimo atualizado com sucesso.');
-        window.location.href = '/emprestimos';
+        window.location.href = '/emprestimo';
     } catch (error) {
         alert(error.message || 'Erro ao atualizar empréstimo.');
     } finally {
@@ -316,7 +316,7 @@ async function vwDeleteEmprestimo() {
 
         var response = await fetch(servidorDw3 + '/deleteEmprestimo/' + encodeURIComponent(emprestimoId), {
             method: 'DELETE',
-            headers: dw3MontarHeadersAutenticacao()
+            headers: montarHeadersAutenticacao()
         });
 
         if (!response.ok) {
@@ -333,7 +333,7 @@ async function vwDeleteEmprestimo() {
             throw new Error(data.status || 'Não foi possível remover o empréstimo.');
         }
 
-        window.location.href = '/emprestimos';
+        window.location.href = '/emprestimo';
     } catch (error) {
         alert(error.message || 'Erro ao remover empréstimo.');
     } finally {

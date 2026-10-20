@@ -21,7 +21,7 @@ const Login = async (req, res, next) => {
     // 3) gera o token JWT: payload { username }, assinado com SECRET_API
     const username = credencial[0].username;
     const token = jwt.sign({ username }, process.env.SECRET_API, {
-      expiresIn: 600, //@ Expira em 10 minutos
+      expiresIn: 120 * 60, //@ Expira em 02 horas (a apostila usa 600 = 10 min)
     });
     return res.json({ auth: true, token: token });
   }

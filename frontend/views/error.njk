@@ -1,0 +1,27 @@
+<!-- views/error.njk -->
+<!-- Renderizado pelo tratador de erros do app.js (res.render('error', { title: 'Erro' })). -->
+<!-- As variaveis message e error vem de res.locals, definidas la no app.js. -->
+
+{% extends "layout.njk" %}
+
+{% block content %}
+  <section class="d-flex align-items-center justify-content-center">
+    <div class="card page-card shadow-lg border-0" style="max-width: 640px; width: 100%;">
+      <div class="card-body p-4 p-md-5">
+        <p class="page-kicker text-danger fw-semibold mb-2">Erro</p>
+        <h1 class="h3 fw-bold mb-3">{{ message or 'Pagina nao encontrada' }}</h1>
+
+        {% if error.status %}
+          <p class="text-secondary mb-3">Codigo do erro: {{ error.status }}</p>
+        {% endif %}
+
+        {# error.stack so aparece em desenvolvimento (veja res.locals.error no app.js) #}
+        {% if error.stack %}
+          <pre class="bg-light border rounded p-3 small text-secondary" style="overflow-x: auto;">{{ error.stack }}</pre>
+        {% endif %}
+
+        <a class="btn btn-primary" href="/login">Voltar para o login</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

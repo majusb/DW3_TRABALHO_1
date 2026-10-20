@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
   var servidorTrabalho = listagem.dataset.servidorTrabalho;
 
   configurarOperacoesLivros(alertBox);
-  vwGetAllLivros(servidorTrabalho, alertBox);
+  carregarLivros(servidorTrabalho, alertBox);
 });
 
-async function vwGetAllLivros(servidorTrabalho, alertBox) {
+async function carregarLivros(servidorTrabalho, alertBox) {
   try {
     if (!servidorTrabalho) {
       throw new Error('Endereco do servidor backend nao configurado.');

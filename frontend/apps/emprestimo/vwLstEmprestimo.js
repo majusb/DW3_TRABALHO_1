@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    if (!dw3IsLogged()) {
+    if (!IsLogged()) {
         return;
     }
 
@@ -22,7 +22,7 @@ async function carregarEmprestimos(servidorDw3, alertBox) {
             throw new Error('Endereço do servidor backend não configurado.');
         }
 
-        var response = await fetch(servidorDw3 + '/getAllEmprestimos');
+        var response = await fetch(servidorDw3 + '/getAllEmprestimo');
 
         if (!response.ok) {
             throw new Error('Não foi possível carregar a lista de empréstimos.');
@@ -46,7 +46,7 @@ function inicializarTabelaEmprestimos(emprestimos) {
         data: emprestimos,
         columns: [
             { data: 'emprestimoid', defaultContent: '' },
-            { data: 'nomePessoa', defaultContent: '' },
+            { data: 'nomepessoa', defaultContent: '' },
             { data: 'endereco', defaultContent: '' },
             { data: 'livroid', defaultContent: '' }, // ou nome do livro se o backend retornar via JOIN
             { 
@@ -78,9 +78,9 @@ function inicializarTabelaEmprestimos(emprestimos) {
 
                     return [
                         '<div class="btn-group btn-group-sm" role="group" aria-label="Operacoes do emprestimo">',
-                        '<button class="btn btn-outline-primary" type="button" data-action="visualizar" data-emprestimoId="' + emprestimoId + '" title="Visualizar" aria-label="Visualizar"><i class="bi bi-eye"></i></button>',
-                        '<button class="btn btn-outline-secondary" type="button" data-action="atualizar" data-emprestimoId="' + emprestimoId + '" title="Atualizar" aria-label="Atualizar"><i class="bi bi-pencil-square"></i></button>',
-                        '<button class="btn btn-outline-danger" type="button" data-action="remover" data-emprestimoId="' + emprestimoId + '" title="Remover" aria-label="Remover"><i class="bi bi-trash"></i></button>',
+                        '<button class="btn btn-outline-primary" type="button" data-action="visualizar" data-emprestimoid="' + emprestimoId + '" title="Visualizar" aria-label="Visualizar"><i class="bi bi-eye"></i></button>',
+                        '<button class="btn btn-outline-secondary" type="button" data-action="atualizar" data-emprestimoid="' + emprestimoId + '" title="Atualizar" aria-label="Atualizar"><i class="bi bi-pencil-square"></i></button>',
+                        '<button class="btn btn-outline-danger" type="button" data-action="remover" data-emprestimoid="' + emprestimoId + '" title="Remover" aria-label="Remover"><i class="bi bi-trash"></i></button>',
                         '</div>'
                     ].join('');
                 }
@@ -115,27 +115,27 @@ function configurarOperacoesEmprestimo(alertBox) {
     }
 
     tabela.addEventListener('click', function(event) {
-        var botao = event.target.closest('button[data-action][data-emprestimoId]');
+        var botao = event.target.closest('button[data-action][data-emprestimoid]');
 
         if (!botao) {
             return;
         }
 
         var action = botao.dataset.action;
-        var emprestimoId = botao.dataset.emprestimoId;
+        var emprestimoId = botao.dataset.emprestimoid;
 
         if (action === 'visualizar') {
-            window.location.href = '/emprestimos/form?oper=Re&emprestimoId=' + encodeURIComponent(emprestimoId);
+            window.location.href = '/emprestimo/form?oper=Re&emprestimoId=' + encodeURIComponent(emprestimoId);
             return;
         }
 
         if (action === 'atualizar') {
-            window.location.href = '/emprestimos/form?oper=Up&emprestimoId=' + encodeURIComponent(emprestimoId);
+            window.location.href = '/emprestimo/form?oper=Up&emprestimoId=' + encodeURIComponent(emprestimoId);
             return;
         }
 
         if (action === 'remover') {
-            window.location.href = '/emprestimos/form?oper=De&emprestimoId=' + encodeURIComponent(emprestimoId);
+            window.location.href = '/emprestimo/form?oper=De&emprestimoId=' + encodeURIComponent(emprestimoId);
         }
     });
 }

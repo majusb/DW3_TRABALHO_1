@@ -6,7 +6,7 @@ router.get('/', function(req,res){
     res.render('login',{
         title: 'Login',
         showNavbar: false,
-        servidorTrabalho: process.env.SERVIDOR_TRABALHO
+        servidorTrabalho: process.env.SERVIDOR_DW3
     });
 });
 
