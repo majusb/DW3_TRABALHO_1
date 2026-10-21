@@ -80,6 +80,7 @@ const DeleteEmprestimo = async(emprestimoIDPar) => {
     let linhasAfetadas;
     let msg="ok";
     try{
+        //deleteEmprestimo é um SOFT DELETE: não apaga a linha, apenas marca deleted=true
         linhasAfetadas =(
         await db.query(
             "UPDATE emprestimos SET " + "deleted = true "+ "WHERE emprestimoId = $1",

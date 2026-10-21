@@ -1,11 +1,11 @@
-    //-- routes/routes.js $`
-    const express = require("express");
-    const routerApp = express.Router();
+//-- routes/routes.js $`
+const express = require("express");
+const routerApp = express.Router();
 
-
+//importa controllers 
 const appLivros = require("../apps/livros/controller/ctlLivros");
 const appEmprestimos = require("../apps/emprestimos/controller/ctlEmprestimo");
-const appLogin = require("../apps/login/controller/ctlLogin"); // Ajuste o caminho se necessário
+const appLogin = require("../apps/login/controller/ctlLogin");
 
     routerApp.use((req, res, next) => {
     next();
